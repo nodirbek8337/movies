@@ -1,0 +1,292 @@
+<div class="container">
+  <nav>
+    <ul>
+      <li>
+        <a href="#" class="logo">
+          <img src="./pic/logo.jpg" />
+          <span class="nav-item">Admin</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fa-solid fa-house-chimney"></i>
+          <span class="nav-item">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fas fa-comment"></i>
+          <span class="nav-item">Message</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fas fa-database"></i>
+          <span class="nav-item">Report</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fas fa-chart-bar"></i>
+          <span class="nav-item">Attendance</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fas fa-cog"></i>
+          <span class="nav-item">Setting</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="nav-item">Log out</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <section class="main">
+    <div class="main-top">
+      <h1>Dashboard</h1>
+      <i class="fas fa-user-cog"></i>
+    </div>
+
+    <section class="attendance">
+      <div class="attendance-list">
+        <div class="header">
+          <h1>Filmlar ro'yxati</h1>
+          <button class="header-btn" (click)="openAddModal()">
+            Film qo'shish
+          </button>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nomi</th>
+              <th>Davlat</th>
+              <th>Yili</th>
+              <th>Tili</th>
+              <th>Davomiyligi</th>
+              <th>Tahrirlash</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let movie of movies">
+              <td>{{ movie.name }}</td>
+              <td>{{ movie.state }}</td>
+              <td>{{ movie.year }}</td>
+              <td>{{ movie.language }}</td>
+              <td>{{ movie.duration }}</td>
+              <td>
+                <button (click)="openUpdateModal(movie.id)">
+                  <i class="fa-solid fa-pencil"></i>O'zgartirish
+                </button>
+                <button
+                  class="table-left-btn"
+                  (click)="openDeleteModal(movie.id)"
+                >
+                  <i class="fa-solid fa-trash"></i>O'chirish
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+</div>
+
+<!-- add modal -->
+<div
+  class="modal-overlay"
+  [style.display]="isAddModalVisible ? 'flex' : 'none'"
+>
+  <div class="updateModal">
+    <p>Yangi film qo'shish!</p>
+    <form #addForm="ngForm" (ngSubmit)="addModal(addForm)">
+      <div class="input-container">
+        <div class="input-content input-name-content">
+          <input ngModel type="text" placeholder="Nomi" name="name" required />
+        </div>
+        <div class="input-content input-state-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Davlat"
+            name="state"
+            required
+          />
+        </div>
+        <div class="input-content input-year-content">
+          <input ngModel type="text" placeholder="Yili" name="year" required />
+        </div>
+        <div class="input-content input-genre-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Janri"
+            name="genre"
+            required
+          />
+        </div>
+      </div>
+      <div class="input-container">
+        <div class="input-content input-img-url-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Img url"
+            name="img_url"
+            required
+          />
+        </div>
+        <div class="input-content input-language-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Tili"
+            name="language"
+            required
+          />
+        </div>
+      </div>
+      <div class="input-container">
+        <div class="input-content input-video-url-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Video url"
+            name="video_url"
+            required
+          />
+        </div>
+        <div class="input-content input-duration-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Davomiyligi"
+            name="duration"
+            required
+          />
+        </div>
+      </div>
+      <button type="submit" [disabled]="addForm.invalid">Qo'shish</button>
+      <button type="button" (click)="closeModal()">Ortga qaytish</button>
+    </form>
+  </div>
+</div>
+<!-- add modal -->
+
+<!-- update modal -->
+<div
+  class="modal-overlay"
+  [style.display]="isUpdateModalVisible ? 'flex' : 'none'"
+>
+  <div class="updateModal">
+    <p>Filmni ma'lumotlarini yangilash!</p>
+    <form (ngSubmit)="updateModal(updateForm)" #updateForm="ngForm">
+      <div class="input-container">
+        <div class="input-content input-name-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Nomi"
+            name="name"
+            value="{{ movie.name }}"
+            required
+          />
+        </div>
+        <div class="input-content input-state-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Davlat"
+            name="state"
+            value="{{ movie.state }}"
+            required
+          />
+        </div>
+        <div class="input-content input-year-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Yili"
+            name="year"
+            value="{{ movie.year }}"
+            required
+          />
+        </div>
+        <div class="input-content input-genre-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Janri"
+            name="genre"
+            value="{{ movie.genre }}"
+            required
+          />
+        </div>
+      </div>
+      <div class="input-container">
+        <div class="input-content input-img-url-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Img url"
+            name="img_url"
+            value="{{ movie.img_url }}"
+            required
+          />
+        </div>
+        <div class="input-content input-language-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Tili"
+            name="language"
+            value="{{ movie.language }}"
+            required
+          />
+        </div>
+      </div>
+      <div class="input-container">
+        <div class="input-content input-video-url-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Video url"
+            name="video_url"
+            value="{{ movie.video_url }}"
+            required
+          />
+        </div>
+        <div class="input-content input-duration-content">
+          <input
+            ngModel
+            type="text"
+            placeholder="Davomiyligi"
+            name="duration"
+            value="{{ movie.duration }}"
+            required
+          />
+        </div>
+      </div>
+      <button type="submit">Yangilash</button>
+      <button (click)="closeModal()">Ortga qaytish</button>
+    </form>
+  </div>
+</div>
+<!-- update modal -->
+
+<!-- delete modal -->
+<div
+  class="modal-overlay"
+  [style.display]="isDeleteModalVisible ? 'flex' : 'none'"
+>
+  <div class="modal">
+    <p>Rostan ham bu filmni ro'yxatdan o'chirib tashamoqchimisiz?</p>
+    <button (click)="deleteModal()">O'chirish</button>
+    <button (click)="closeModal()">Ortga qaytish</button>
+  </div>
+</div>
+<!-- delete modal -->
