@@ -54,7 +54,20 @@
     <section class="attendance">
       <div class="attendance-list">
         <div class="header">
-          <h1>Filmlar ro'yxati</h1>
+          <div class="header-title-content">
+            <form #searchForm="ngForm" (input)="searchFunc($event)">
+              <h1>Filmlar ro'yxati</h1>
+              <div class="search-input">
+                <input
+                  type="text"
+                  placeholder="Qidirish..."
+                  ngModel
+                  name="search-input"
+                  required
+                />
+              </div>
+            </form>
+          </div>
           <button class="header-btn" (click)="openAddModal()">
             Film qo'shish
           </button>
@@ -91,6 +104,15 @@
             </tr>
           </tbody>
         </table>
+        <div class="more-btn-content">
+          <button
+            *ngIf="!moreBtnVisible"
+            class="more-btn"
+            (click)="moreBtnClicked()"
+          >
+            Ko'proq ko'rish
+          </button>
+        </div>
       </div>
     </section>
   </section>
@@ -272,7 +294,7 @@
         </div>
       </div>
       <button type="submit">Yangilash</button>
-      <button (click)="closeModal()">Ortga qaytish</button>
+      <button type="button" (click)="closeModal()">Ortga qaytish</button>
     </form>
   </div>
 </div>

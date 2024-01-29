@@ -80,7 +80,7 @@ a:hover i {
   display: flex;
 }
 
-/* MAin Section */
+/* Main Section */
 .main {
   position: relative;
   padding: 20px;
@@ -118,6 +118,31 @@ a:hover i {
   padding-bottom: 10px;
 }
 
+.header .header-title-content form {
+  display: flex;
+  align-items: center;
+  column-gap: 40px;
+}
+
+.header-title-content h1 {
+  font-size: 22px;
+}
+
+.header .search-input input {
+  background-color: transparent;
+  border: 2px solid #4ad489;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 300px;
+}
+
+.header .search-input input:focus {
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(74, 212, 137, 0.7);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(74, 212, 137, 0.7);
+  box-shadow: 0px 0px 10px 0px rgba(74, 212, 137, 0.7);
+}
+
 .header .header-btn {
   padding: 6px 20px;
   border-radius: 10px;
@@ -134,7 +159,7 @@ a:hover i {
 
 .table {
   border-collapse: collapse;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   font-size: 15px;
   min-width: 100%;
   overflow: hidden;
@@ -165,7 +190,7 @@ table thead tr {
   border-bottom: 2px solid #4ad489;
 }
 .table button {
-  padding: 6px 20px;
+  padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
   background: transparent;
@@ -178,6 +203,26 @@ table thead tr {
 }
 
 .table button:hover {
+  background: #4ad489;
+  color: #fff;
+}
+
+.more-btn-content {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.more-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #4ad489;
+  transition: 0.5s;
+}
+
+.more-btn:hover {
   background: #4ad489;
   color: #fff;
 }
@@ -216,14 +261,14 @@ table thead tr {
   font-size: 24px;
 }
 
-.modal-overlay .valid-text{
+.modal-overlay .valid-text {
   font-size: 16px;
   color: red;
 }
 
 .modal-overlay button {
   margin: 0 10px;
-  padding: 6px 20px;
+  padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
   background: transparent;

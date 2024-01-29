@@ -16,15 +16,44 @@ export class AdminComponent implements OnInit {
   movieVariable: any = {};
   movie: any = {};
   movie_id = '';
+  searchValue = '';
+  morebtnNumbers = 8;
+  moviesSize!: number;
+  moreBtnVisible = false;
 
   constructor(private movieService: MovieService) {
     this.getMovies();
   }
 
+  searchFunc(event: Event) {
+    this.moreBtnVisible = true;
+    this.searchValue = (event.target as HTMLInputElement).value;
+
+    let lowerSearchValue = this.searchValue.toLowerCase();
+
+    let foundMovies = this.movies.filter((movieValue) => {
+      let lowerMovieName = movieValue.name.toLowerCase();
+
+      return lowerMovieName.includes(lowerSearchValue);
+    });
+    if (this.searchValue !== '') {
+      this.movies = foundMovies;
+    } else {
+      this.getMovies();
+    }
+  }
+
   getMovies(): void {
     this.movieService.getMovies().subscribe(
       (movies: any[]) => {
-        this.movies = movies;
+        this.moviesSize = movies.length;
+        if (this.morebtnNumbers >= this.moviesSize) {
+          this.movies = movies.slice(0, this.moviesSize);
+          this.moreBtnVisible = true;
+        } else {
+          this.movies = movies.slice(0, this.morebtnNumbers);
+          this.moreBtnVisible = false;
+        }
       },
       (error) => {
         console.error("Ma'lumotlar so'rovida xatolik!!! : ", error);
@@ -63,6 +92,7 @@ export class AdminComponent implements OnInit {
       );
       addForm.reset();
       this.closeModal();
+      window.location.reload();
     }
   }
 
@@ -78,6 +108,7 @@ export class AdminComponent implements OnInit {
           }
         );
       this.closeModal();
+      window.location.reload();
     } else {
       console.log('Film yangilanmadi!!!');
     }
@@ -97,7 +128,7 @@ export class AdminComponent implements OnInit {
       this.movieVariable['name'] = form.value['name'];
       this.movieVariable['state'] = form.value['state'];
       this.movieVariable['year'] = form.value['year'];
-      this.movieVariable['genre'] = form.value['genre'];
+      this.movieVariable['genre'] = form.value['genre'].split(' ');
       this.movieVariable['img_url'] = form.value['img_url'];
       this.movieVariable['language'] = form.value['language'];
       this.movieVariable['video_url'] = form.value['video_url'];
@@ -112,7 +143,7 @@ export class AdminComponent implements OnInit {
     this.movieVariable['name'] = form.value['name'];
     this.movieVariable['state'] = form.value['state'];
     this.movieVariable['year'] = form.value['year'];
-    this.movieVariable['genre'] = form.value['genre'];
+    this.movieVariable['genre'] = form.value['genre'].split(',');
     this.movieVariable['img_url'] = form.value['img_url'];
     this.movieVariable['language'] = form.value['language'];
     this.movieVariable['video_url'] = form.value['video_url'];
@@ -123,6 +154,7 @@ export class AdminComponent implements OnInit {
     if (this.movie_id) {
       this.deleteMovie(this.movie_id);
       this.closeModal();
+      window.location.reload();
     }
   }
 
@@ -144,6 +176,11 @@ export class AdminComponent implements OnInit {
         console.error("Filmni o'chirish so'rovida xatolik!!! : ", error);
       }
     );
+  }
+
+  moreBtnClicked() {
+    this.morebtnNumbers += 4;
+    this.getMovies();
   }
 
   ngOnInit(): void {}
